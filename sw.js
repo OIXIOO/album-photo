@@ -1,4 +1,4 @@
-var C="album-v9",F=["./","index.html","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png"];
+var C="album-v14",F=["./","index.html","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(F)}).then(function(){return self.skipWaiting()}))});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.filter(function(n){return n!==C}).map(function(n){return caches.delete(n)}))}).then(function(){return self.clients.claim()}))});
 self.addEventListener("fetch",function(e){if(e.request.method!=="GET")return;e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).then(function(resp){if(resp&&(resp.ok||resp.type==="opaque")){var cp=resp.clone();caches.open(C).then(function(c){c.put(e.request,cp)})}return resp}).catch(function(){return caches.match("index.html")})}))});
